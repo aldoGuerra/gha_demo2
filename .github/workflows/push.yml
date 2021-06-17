@@ -3,15 +3,13 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
- 
 jobs:
-  deploy:
-    name: deploy to docker 
- 
+  build-and-deploy:
+    name: Build and Deploy
     runs-on: ubuntu-latest
- 
     steps:
-    - uses: actions/checkout@master
+    - name: Checkout code
+      uses: actions/checkout@v2
     - name: Set up Python 3.9
       uses: actions/setup-python@v2
       with:
@@ -21,12 +19,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: build and push to docker
+    - name: Build and push Docker image
       uses: docker/build-push-action@v1
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: conmedugit/demo_web
+        dockerfile: Dockerfile
         tag_with_ref: true
         tag_with_sha: true
         tags: ${{ github.sha }}
