@@ -17,9 +17,9 @@ services:
         environment: 
             - POSTGRES_DB=postgres
             - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=psql&4n4l1s1s
+            - POSTGRES_PASSWORD=postgres
             - PGDATA=/var/lib/postgresql/data
         volumes:
-            - db-data:/var/lib/postgresql/data
+            - pgdb-db-data:/var/lib/postgresql/data
 volumes:
-    db-data:
+    pgdb-db-data:
